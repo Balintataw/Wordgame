@@ -1,0 +1,28 @@
+.game-board-container {
+    text-align: center;
+    height: 600px;
+}
+
+#word-board {
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+.guesses {
+    margin: 20px;
+}
+
+#letters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 800px;
+    padding: 5px;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.letter {
+    padding: 10px;
+    cursor: pointer;
+}
