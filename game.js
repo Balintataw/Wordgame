@@ -25,8 +25,8 @@ let startingBoard = [];
 let len = commonWords.length;
 let randomIndex = Math.floor(Math.random() * len);
 let currentWord = commonWords[randomIndex].toLowerCase();
-// let tempCurrentWord = '';
 let alphabetArray = [];
+// let tempCurrentWord = '';
 
 class CreateGame {
     constructor(numOfGuesses) {
@@ -41,7 +41,7 @@ class CreateGame {
         $('.guesses').html(`Guesses left: ${this.numOfGuesses}`)
        
     }
-    playableLetters() {
+    createLetters() {
         for (let i = 65; i < 91; i++) {
             $('#letters').append(`<div class="letter">${String.fromCharCode(i)}</div>`)
             alphabetArray.push(String.fromCharCode(i))
@@ -49,38 +49,42 @@ class CreateGame {
         return alphabetArray;
     }
     removeLetter(letter) {
-        // alphabetArray.join('').replace(/letter/, `${letter.strike()}`).split('')
+        var re = new RegExp(letter,"g");
+        let newAlpha = alphabetArray.join('').replace(re, '_').split('')
+        // console.log(alphabetArray)
         this.numOfGuesses--
         $('.guesses').html(`Guesses left: ${this.numOfGuesses}`)
-
+        // $('#letters').empty();
+        // for (let i = 0; i < 26; i++) {
+        //     $('#letters').append(`<div class="letter">${newAlpha[i]}</div>`)
+        // }
     }
 }
 
-// (function playableLetters() {
-//     let alphabetArryay = [];
-//     for (let i = 65; i < 91; i++) {
-//         $('#letters').append(`<div class="letter">${String.fromCharCode(i)}</div>`)
-//     }
-// })()
-
 const game = new CreateGame(10);
 game.makeBoard();
-game.playableLetters();
+game.createLetters();
 
 $('.letter').click(function() {
     let $this = $(this);
+    console.log(`Selected Letter: $this.text()`)
+    console.log(`Current Word: ${currentWord}`)
     let selectedLetter = $this.text()
-    game.removeLetter(selectedLetter)
     if (currentWord.includes(selectedLetter.toLowerCase())) {
+        for (let i = 0; i < currentWord.length; i++) {
+            if (startingBoard[i] === '_ ') {
+                if (currentWord[i] === selectedLetter.toLowerCase()) {
+                    startingBoard[i] = selectedLetter;
+                }
+            }
+        }
         $('#message').html(`'${selectedLetter}' is correct`)
-        let index = currentWord.indexOf(selectedLetter.toLowerCase())
-        startingBoard[index] = currentWord[index]
         $('#word-board').html(startingBoard)
     }
-    console.log(currentWord)
     if (startingBoard.includes('_ ') === false) {
         $('#message').html(`Congratulations you have won`)
     }
+    game.removeLetter(selectedLetter)
         
 })
 
