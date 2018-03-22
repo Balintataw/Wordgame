@@ -1,6 +1,5 @@
 var commonWords = [
-    "the","uss enterprise","q","star trek","phaser","data","scotty","uhura","that","bones","starfleet",
-    "was","for","riker","cardassian","capt picard","with","redshirt","they","voyager","attic","stardate",
+    "the","uss enterprise","q","star trek","phaser","data","scotty","uhura","that","bones","starfleet","riker","cardassian","capt picard","with","redshirt","they","voyager","attic","stardate",
     "this","have","from","klingon","chekov","khan","romulan","word","but","ferengi",
     "what","all","were","borg","when","your","can","said","there",
     "use","vulcan","each","which","she","worf","how","their","federation","will",
@@ -11,6 +10,9 @@ var commonWords = [
     "who","oil","prime directive","now","find","long","down","sulu","did","laforge",
     "come","made","may","part"
 ];
+var starWarsWords = [ //implement an option for word sets
+    "luke","force","imperial","alliance","jedi","wookie","tatooine","star destroyer","millenium falcon","empire","darth vader","droid","lightsaber","han solo","chewbacca","stormtrooper","leia","obiwan kenobi","death star","boba fett","x wing","ewok","resistance","lando","hoth","jabba the hut","palpatine","coruscant","speeder bike","dagobah"
+]
 
 let startingBoard = [];
 let len = commonWords.length;
