@@ -27,6 +27,7 @@ class CreateGame {
     get guesses() {
         return this.numOfGuesses
     }
+
     //creates the correct blanks to play 
     makeBoard() {
         for(let i = 0; i < currentWord.length; i++) {
@@ -81,6 +82,10 @@ game.createLetters();
 
 $('#letters').on('click', '.letter', function() {
     let $this = $(this);
+    if ($this.text() == '_') {
+        $('#message').html(`You already picked that`)
+        return;
+    }
     console.log(`Selected Letter: ${$this.text()}`)
     console.log(`Current Word: ${currentWord}`)
     let selectedLetter = $this.text()
@@ -98,7 +103,6 @@ $('#letters').on('click', '.letter', function() {
     } else {
         $('#message').html(`There are no ${selectedLetter}'s`)
     }
-
     game.removeLetter(selectedLetter)
     game.checkEndGame(currentWord)
 })
