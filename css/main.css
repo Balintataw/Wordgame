@@ -26,3 +26,8 @@
     padding: 10px;
     cursor: pointer;
 }
+
+.nuke {
+    background-image: url(../200.gif);
+    background-size: cover;
+}
