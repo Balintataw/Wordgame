@@ -1,14 +1,9 @@
 var commonWords = [
-    "the","uss enterprise","q","star trek","phaser","data","scotty","uhura","that","bones","starfleet","riker","cardassian","capt picard","with","redshirt","they","voyager","attic","stardate",
-    "this","have","from","klingon","chekov","khan","romulan","word","but","ferengi",
-    "what","all","were","borg","when","your","can","said","there",
-    "use","vulcan","each","which","she","worf","how","their","federation","will",
-    "tricorder","other","about","seven of nine","many","then","them","these","bajoran",
-    "some","her","would","make","like","him","into","time","shuttle",
-    "look","spock","more","write","capt kirk","see","number","bridge","way",
-    "could","people","mind meld","than","first","water","been","call",
-    "who","oil","prime directive","now","find","long","down","sulu","did","laforge",
-    "come","made","may","part"
+    "uss enterprise","q","star trek","phaser","data","scotty","uhura","bones","starfleet","riker","cardassian","capt picard","redshirt","voyager","attic","stardate","klingon","chekov","khan","romulan","ferengi",
+    "what","were","borg","vulcan","each","which","worf","federation",
+    "tricorder","other","about","seven of nine","bajoran",
+    "some","her","would","make","like","into","time","shuttle",
+    "look","spock","holodeck","write","capt kirk","see","number","bridge","transporter","mind meld","bird of prey","prime directive","down","sulu","laforge"
 ];
 var starWarsWords = [ //implement an option for word sets
     "luke","force","imperial","alliance","jedi","wookie","tatooine","star destroyer","millenium falcon","empire","darth vader","droid","lightsaber","han solo","chewbacca","stormtrooper","leia","obiwan kenobi","death star","boba fett","x wing","ewok","resistance","lando","hoth","jabba the hut","palpatine","coruscant","speeder bike","dagobah"
@@ -70,6 +65,9 @@ class CreateGame {
                 $('.happy-easter').css('display', 'block')
             }
             $('#message').html(`Congratulations you have won FLAMES!!`)
+            setTimeout(function() {
+                $.playSound('Khan.mp3')
+            }, 500)
             $('.game-board-container').addClass('nuke');
         } else if (game.guesses === 0) {
             $('#message').html(`Congratulations you have lost FLAMES!!!!!
