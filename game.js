@@ -16,7 +16,7 @@ let startingBoard = [];
 let len = commonWords.length;
 let randomIndex = Math.floor(Math.random() * len);
 let currentWord = commonWords[randomIndex].toLowerCase();
-// let currentWord = 'space ship' //for testing words directly
+// let currentWord = 'capt kirk' //for testing words directly
 let alphabetArray = [];
 
 class CreateGame {
@@ -64,11 +64,17 @@ class CreateGame {
     //checks for a win or lose scenario
     checkEndGame(currentWord) {
         if (startingBoard.includes('_ ') === false) {
+            if (currentWord === 'capt picard' || currentWord === 'capt kirk') {
+                $('.happy-easter').css('display', 'block')
+            }
             $('#message').html(`Congratulations you have won FLAMES!!`)
             $('.game-board-container').addClass('nuke');
         } else if (game.guesses === 0) {
             $('#message').html(`Congratulations you have lost FLAMES!!!!!
             The answer was '${currentWord}'`)
+            setTimeout(function() {
+                $.playSound('picard37.mp3')
+            }, 1000)
             // $('.game-board-container').css('z-index', 5).fire({mode: 'anim'})
             $('.game-board-container').addClass('nuke');
             $('#letters').off()
