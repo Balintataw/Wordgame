@@ -1,6 +1,7 @@
 .game-board-container {
     text-align: center;
     height: 600px;
+    font-family: helvetica, sans-serif;
 }
 
 #word-board {
@@ -12,11 +13,14 @@
     margin: 20px;
 }
 
+.guesses, #message, .letter {
+    font-size: 20px;
+}
+
 #letters {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    width: 800px;
+    justify-content: center;
     padding: 5px;
     align-items: center;
     margin: 0 auto;
@@ -25,9 +29,14 @@
 .letter {
     padding: 10px;
     cursor: pointer;
+    font-size: 30px;
 }
 
 .nuke {
     background-image: url(../200.gif);
     background-size: cover;
+}
+
+.happy-easter {
+    display: none;
 }

@@ -1,14 +1,14 @@
 var commonWords = [
-    "the","enterprise","and","startrek","phaser","data","scotty","you","that","bones","he",
-    "was","for","riker","are","picard","with","his","they","voyager","attic","be",
-    "this","have","from","klingon","one","had","by","word","but","not",
+    "the","uss enterprise","q","star trek","phaser","data","scotty","uhura","that","bones","starfleet",
+    "was","for","riker","cardassian","capt picard","with","redshirt","they","voyager","attic","stardate",
+    "this","have","from","klingon","chekov","khan","romulan","word","but","ferengi",
     "what","all","were","borg","when","your","can","said","there",
-    "use","vulcan","each","which","she","wharf","how","their","if","will",
-    "up","other","about","out","many","then","them","these","so",
-    "some","her","would","make","like","him","into","time","has",
-    "look","two","more","write","kirk","see","number","no","way",
-    "could","people","my","than","first","water","been","call",
-    "who","oil","its","now","find","long","down","day","did","get",
+    "use","vulcan","each","which","she","worf","how","their","federation","will",
+    "tricorder","other","about","seven of nine","many","then","them","these","bajoran",
+    "some","her","would","make","like","him","into","time","shuttle",
+    "look","spock","more","write","capt kirk","see","number","bridge","way",
+    "could","people","mind meld","than","first","water","been","call",
+    "who","oil","prime directive","now","find","long","down","sulu","did","laforge",
     "come","made","may","part"
 ];
 
@@ -16,6 +16,7 @@ let startingBoard = [];
 let len = commonWords.length;
 let randomIndex = Math.floor(Math.random() * len);
 let currentWord = commonWords[randomIndex].toLowerCase();
+// let currentWord = 'space ship' //for testing words directly
 let alphabetArray = [];
 
 class CreateGame {
@@ -26,15 +27,19 @@ class CreateGame {
     get guesses() {
         return this.numOfGuesses
     }
-
+    //creates the correct blanks to play 
     makeBoard() {
         for(let i = 0; i < currentWord.length; i++) {
-            startingBoard.push('_ ');
+            console.log(currentWord[i])
+            if (currentWord[i] == ' ') {
+                startingBoard.push('- ')
+            } else {
+                startingBoard.push('_ ');
+            }
         }
         $('#word-board').html(startingBoard)
         $('.guesses').html(`Guesses left: ${this.numOfGuesses}`)
         $('#message').html(`Select a letter to begin`)
-       
     }
     createLetters() {
         for (let i = 65; i < 91; i++) {
@@ -43,11 +48,8 @@ class CreateGame {
         }
         return alphabetArray;
     }
+    //removes selected letter from queue and decrements guess count
     removeLetter(letter) {
-        var re = new RegExp(letter,"g");
-        let newAlpha = alphabetArray.join('').replace(re, '_').split('')
-        this.numOfGuesses--
-        $('.guesses').html(`Guesses left: ${this.numOfGuesses}`)
         $('#letters').empty();
         for (let i = 0; i < alphabetArray.length; i++) {
             if (alphabetArray[i] === letter) {
@@ -55,10 +57,25 @@ class CreateGame {
             }
             $('#letters').append(`<div class="letter">${alphabetArray[i]}</div>`)
         }
+        this.numOfGuesses--;
+        $('.guesses').html(`Guesses left: ${this.numOfGuesses}`)
+    }
+    //checks for a win or lose scenario
+    checkEndGame(currentWord) {
+        if (startingBoard.includes('_ ') === false) {
+            $('#message').html(`Congratulations you have won FLAMES!!`)
+            $('.game-board-container').addClass('nuke');
+        } else if (game.guesses === 0) {
+            $('#message').html(`Congratulations you have lost FLAMES!!!!!
+            The answer was '${currentWord}'`)
+            // $('.game-board-container').css('z-index', 5).fire({mode: 'anim'})
+            $('.game-board-container').addClass('nuke');
+            $('#letters').off()
+        }
     }
 }
 
-const game = new CreateGame(10);
+const game = new CreateGame(currentWord.length+5);
 game.makeBoard();
 game.createLetters();
 
@@ -67,6 +84,7 @@ $('#letters').on('click', '.letter', function() {
     console.log(`Selected Letter: ${$this.text()}`)
     console.log(`Current Word: ${currentWord}`)
     let selectedLetter = $this.text()
+    //adds clicked letter to game board if it exists
     if (currentWord.includes(selectedLetter.toLowerCase())) {
         for (let i = 0; i < currentWord.length; i++) {
             if (startingBoard[i] === '_ ') {
@@ -80,18 +98,9 @@ $('#letters').on('click', '.letter', function() {
     } else {
         $('#message').html(`There are no ${selectedLetter}'s`)
     }
-    if (startingBoard.includes('_ ') === false) {
-        $('#message').html(`Congratulations you have won FLAMES!!`)
-        $('.game-board-container').addClass('nuke');
-    }
+
     game.removeLetter(selectedLetter)
-    if (game.guesses === 0) {
-        $('#message').html(`Congratulations you have lost FLAMES!!!!!
-                            The answer was '${currentWord}'`)
-        // $('.game-board-container').css('z-index', 5).fire({mode: 'anim'})
-        $('.game-board-container').addClass('nuke');
-        $('#letters').off()
-    }
+    game.checkEndGame(currentWord)
 })
 
 
